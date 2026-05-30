@@ -1,6 +1,10 @@
 {
   "name": "prep-for-work",
   "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
@@ -8,13 +12,15 @@
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\""
   },
   "devDependencies": {
-    "turbo": "^2.5.4",
-    "prettier": "^3.5.3",
-    "eslint": "^9.28.0",
+    "@eslint/js": "^9.39.4",
     "@typescript-eslint/eslint-plugin": "^8.33.1",
     "@typescript-eslint/parser": "^8.33.1",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0"
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.4"
   },
   "packageManager": "pnpm@10.11.0"
 }
