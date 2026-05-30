@@ -1,0 +1,19 @@
+{
+  "name": "@prep/server",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "@prep/types": "workspace:*",
+    "@types/node": "^22.15.21",
+    "@types/ws": "^8.5.14",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
