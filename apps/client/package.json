@@ -1,0 +1,25 @@
+{
+  "name": "@prep/client",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@prep/types": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1",
+    "zustand": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.5.2",
+    "@welldone-software/why-did-you-render": "^10.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}
