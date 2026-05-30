@@ -69,7 +69,7 @@ server/
 
 ```
 /                   → redirect → /dashboard
-/dashboard          → <DashboardPage>   summary: top-5 volatile, ticks/s, WS status
+/dashboard          → <DashboardPage>   summary: top-5 by price delta (last 50 ticks), ticks/s, WS status
 /watchlist          → <WatchlistPage>   live grid, 200 symbols
 /chart/:symbol      → <ChartPage>       price detail + canvas placeholder
 /settings           → <SettingsPage>    rate slider (10–5000/s), symbol count slider (10–500)
@@ -98,7 +98,7 @@ server/
     <Router>
       /dashboard  → <DashboardPage>
                       <StatsBar>          ticks/s + WS status
-                      <TopVolatileList>   top-5 symbols by price delta
+                      <TopVolatileList>   top-5 symbols by price delta (last 50 ticks)
       /watchlist  → <WatchlistPage>
                       <WatchlistGrid>     200 memo-wrapped <Row> components
                                           (virtualization: learner adds Week 4)
