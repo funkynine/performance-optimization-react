@@ -9,6 +9,7 @@ export type FirehoseConfig = {
 export type FirehoseState = {
   prices: Map<string, number>
   config: FirehoseConfig
+  symbolList: string[]
 }
 
 export function createFirehose(initial: FirehoseConfig): FirehoseState {
@@ -16,12 +17,11 @@ export function createFirehose(initial: FirehoseConfig): FirehoseState {
   SYMBOLS.slice(0, initial.count).forEach((s) => {
     prices.set(s, 100 + Math.random() * 900)
   })
-  return { prices, config: { ...initial } }
+  return { prices, config: { ...initial }, symbolList: Array.from(prices.keys()) }
 }
 
 export function nextTick(state: FirehoseState): Tick {
-  const symbols = Array.from(state.prices.keys())
-  const symbol = symbols[Math.floor(Math.random() * symbols.length)]
+  const symbol = state.symbolList[Math.floor(Math.random() * state.symbolList.length)]
   const prev = state.prices.get(symbol)!
   const delta = (Math.random() - 0.5) * prev * 0.002
   const price = Math.max(0.01, prev + delta)
@@ -39,13 +39,12 @@ export function snapshot(state: FirehoseState): Tick[] {
 
 export function updateConfig(state: FirehoseState, next: FirehoseConfig): void {
   state.config = { ...next }
-  // add new symbols if count increased
   SYMBOLS.slice(0, next.count).forEach((s) => {
     if (!state.prices.has(s)) {
       state.prices.set(s, 100 + Math.random() * 900)
     }
   })
-  // remove symbols if count decreased
-  const toRemove = Array.from(state.prices.keys()).slice(next.count)
-  toRemove.forEach((s) => state.prices.delete(s))
+  // remove symbols outside the new count
+  SYMBOLS.slice(next.count).forEach((s) => state.prices.delete(s))
+  state.symbolList = Array.from(state.prices.keys())
 }

@@ -11,7 +11,13 @@ const wss = new WebSocketServer({ port: PORT })
 
 console.log(`[firehose] WS server listening on ws://localhost:${PORT}`)
 
+wss.on('error', (err) => {
+  console.error('[firehose] server error:', err.message)
+  process.exit(1)
+})
+
 wss.on('connection', (ws: WebSocket) => {
+  ws.on('error', (err) => console.error('[firehose] client error:', err.message))
   console.log('[firehose] client connected')
 
   const msg: ServerMessage = { type: 'snapshot', data: snapshot(state) }
@@ -21,8 +27,11 @@ wss.on('connection', (ws: WebSocket) => {
     try {
       const parsed = JSON.parse(raw.toString()) as ClientMessage
       if (parsed.type === 'config') {
-        updateConfig(state, { rate: parsed.rate, count: parsed.count })
-        console.log(`[firehose] config updated: rate=${parsed.rate} count=${parsed.count}`)
+        const rate = Math.max(1, Math.min(10_000, Math.floor(Number(parsed.rate))))
+        const count = Math.max(1, Math.min(500, Math.floor(Number(parsed.count))))
+        if (!Number.isFinite(rate) || !Number.isFinite(count)) return
+        updateConfig(state, { rate, count })
+        console.log(`[firehose] config updated: rate=${rate} count=${count}`)
       }
     } catch {
       // ignore malformed messages
