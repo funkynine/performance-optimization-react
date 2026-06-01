@@ -28,13 +28,12 @@ export const PriceChart = memo(function PriceChart({ symbol }: Props) {
     const max = Math.max(...prices)
     const range = max - min || 1
 
-    ctx.strokeStyle = '#89b4fa'
+    ctx.strokeStyle = '#58a6ff'
     ctx.lineWidth = 1.5
     ctx.beginPath()
-
     prices.forEach((p, i) => {
       const x = (i / (prices.length - 1)) * width
-      const y = height - ((p - min) / range) * height
+      const y = height - ((p - min) / range) * (height - 8) - 4
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
     })
     ctx.stroke()
@@ -42,17 +41,27 @@ export const PriceChart = memo(function PriceChart({ symbol }: Props) {
   }, [tick])
 
   return (
-    <div style={{ padding: 16 }}>
-      <h3 style={{ fontFamily: 'monospace', marginBottom: 8 }}>{symbol}</h3>
+    <div style={{ padding: 20 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 16 }}>
+        <span style={{ fontSize: 20, fontWeight: 700, color: '#e6edf3', fontFamily: 'monospace' }}>{symbol}</span>
+        <span style={{ fontSize: 24, fontWeight: 700, color: '#e6edf3', fontFamily: 'monospace' }}>
+          {tick?.price.toFixed(2) ?? '—'}
+        </span>
+      </div>
       <canvas
         ref={canvasRef}
-        width={600}
-        height={200}
-        style={{ background: '#1e1e2e', borderRadius: 4, display: 'block' }}
+        width={800}
+        height={240}
+        style={{
+          display: 'block',
+          width: '100%',
+          maxWidth: 800,
+          height: 240,
+          background: '#161b22',
+          border: '1px solid #21262d',
+          borderRadius: 8,
+        }}
       />
-      <p style={{ fontFamily: 'monospace', fontSize: 11, color: '#6c7086', marginTop: 4 }}>
-        Price: {tick?.price.toFixed(2) ?? '—'}
-      </p>
     </div>
   )
 })
