@@ -15,7 +15,6 @@ export const TopVolatileList = memo(function TopVolatileList() {
       if (hist.length > 50) hist.shift()
       historyRef.current.set(symbol, hist)
     })
-
     const deltas: SymbolDelta[] = []
     historyRef.current.forEach((hist, symbol) => {
       if (hist.length < 2) return
@@ -27,22 +26,30 @@ export const TopVolatileList = memo(function TopVolatileList() {
   }, [ticks])
 
   return (
-    <div style={{ padding: 16, fontFamily: 'monospace', fontSize: 13 }}>
-      <h3 style={{ marginBottom: 8 }}>Top 5 Volatile (last 50 ticks)</h3>
+    <div style={{
+      background: '#161b22',
+      border: '1px solid #21262d',
+      borderRadius: 8,
+      margin: '0 20px 20px',
+      padding: 16,
+    }}>
+      <div style={{ fontSize: 12, color: '#8b949e', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 12 }}>
+        Top 5 Volatile — last 50 ticks
+      </div>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr>
-            <th style={{ textAlign: 'left' }}>Symbol</th>
-            <th style={{ textAlign: 'right' }}>Price</th>
-            <th style={{ textAlign: 'right' }}>Δ</th>
+          <tr style={{ fontSize: 11, color: '#8b949e', borderBottom: '1px solid #21262d' }}>
+            <th style={{ textAlign: 'left', fontWeight: 500, paddingBottom: 8 }}>Symbol</th>
+            <th style={{ textAlign: 'right', fontWeight: 500, paddingBottom: 8 }}>Price</th>
+            <th style={{ textAlign: 'right', fontWeight: 500, paddingBottom: 8 }}>Δ Price</th>
           </tr>
         </thead>
         <tbody>
           {top5.map(({ symbol, price, delta }) => (
-            <tr key={symbol}>
-              <td>{symbol}</td>
-              <td style={{ textAlign: 'right' }}>{price.toFixed(2)}</td>
-              <td style={{ textAlign: 'right', color: '#f38ba8' }}>{delta.toFixed(2)}</td>
+            <tr key={symbol} style={{ fontSize: 13, borderBottom: '1px solid #21262d' }}>
+              <td style={{ padding: '6px 0', color: '#58a6ff', fontWeight: 600, fontFamily: 'monospace' }}>{symbol}</td>
+              <td style={{ padding: '6px 0', textAlign: 'right', color: '#e6edf3', fontFamily: 'monospace' }}>{price.toFixed(2)}</td>
+              <td style={{ padding: '6px 0', textAlign: 'right', color: '#f85149', fontFamily: 'monospace' }}>{delta.toFixed(2)}</td>
             </tr>
           ))}
         </tbody>

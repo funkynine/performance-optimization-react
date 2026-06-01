@@ -1,33 +1,56 @@
-import { memo, useEffect, useRef, useState } from 'react'
+import { memo } from 'react'
+import type { CSSProperties } from 'react'
 import { useTickStore } from '../store/useTickStore'
+import { useTicksPerSec } from '../hooks/useTicksPerSec'
 import type { FirehoseStatus } from '../hooks/useFirehose'
 
 type Props = { status: FirehoseStatus }
 
+const card: CSSProperties = {
+  background: '#161b22',
+  border: '1px solid #21262d',
+  borderRadius: 8,
+  padding: 16,
+}
+
+const labelStyle: CSSProperties = {
+  fontSize: 11,
+  color: '#8b949e',
+  textTransform: 'uppercase',
+  letterSpacing: '0.5px',
+  marginBottom: 4,
+}
+
+const valueStyle: CSSProperties = {
+  fontSize: 24,
+  fontWeight: 700,
+  color: '#e6edf3',
+  fontFamily: 'monospace',
+}
+
 export const StatsBar = memo(function StatsBar({ status }: Props) {
-  const ticks = useTickStore((s) => s.ticks)
-  const countRef = useRef(0)
-  const [ticksPerSec, setTicksPerSec] = useState(0)
+  const symbolCount = useTickStore((s) => Object.keys(s.ticks).length)
+  const ticksPerSec = useTicksPerSec()
 
-  useEffect(() => {
-    countRef.current += 1
-  })
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTicksPerSec(countRef.current)
-      countRef.current = 0
-    }, 1000)
-    return () => clearInterval(id)
-  }, [])
-
-  const statusColor = status === 'connected' ? '#22c55e' : status === 'connecting' ? '#f59e0b' : '#ef4444'
+  const statusColor = status === 'connected' ? '#3fb950' : status === 'connecting' ? '#f0883e' : '#f85149'
+  const statusIcon = status === 'connected' ? '●' : status === 'connecting' ? '◌' : '✕'
 
   return (
-    <div style={{ display: 'flex', gap: 16, padding: '8px 16px', background: '#1e1e2e', color: '#cdd6f4', fontFamily: 'monospace', fontSize: 13 }}>
-      <span>WS: <span style={{ color: statusColor }}>{status}</span></span>
-      <span>ticks/s: <strong>{ticksPerSec}</strong></span>
-      <span>symbols: <strong>{Object.keys(ticks).length}</strong></span>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, padding: 20 }}>
+      <div style={card}>
+        <div style={labelStyle}>Ticks / s</div>
+        <div style={valueStyle}>{ticksPerSec}</div>
+      </div>
+      <div style={card}>
+        <div style={labelStyle}>Symbols</div>
+        <div style={valueStyle}>{symbolCount}</div>
+      </div>
+      <div style={card}>
+        <div style={labelStyle}>WS Status</div>
+        <div style={{ ...valueStyle, fontSize: 16, color: statusColor }}>
+          {statusIcon} {status}
+        </div>
+      </div>
     </div>
   )
 })

@@ -6,7 +6,7 @@ type Props = { status: FirehoseStatus }
 
 export function DashboardPage({ status }: Props) {
   return (
-    <div>
+    <div style={{ background: '#0f1117', minHeight: 'calc(100vh - 44px)' }}>
       <StatsBar status={status} />
       <TopVolatileList />
     </div>
