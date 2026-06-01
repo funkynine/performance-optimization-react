@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTickStore } from '../store/useTickStore'
 
 export function useTicksPerSec(): number {
-  const ticks = useTickStore((s) => s.ticks)
+  useTickStore((s) => s.ticks) // subscribe to trigger re-render on each flush
   const countRef = useRef(0)
   const [ticksPerSec, setTicksPerSec] = useState(0)
 
