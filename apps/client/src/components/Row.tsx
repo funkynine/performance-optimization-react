@@ -12,12 +12,17 @@ export const Row = memo(function Row({ symbol }: Props) {
 
   return (
     <tr
+      className="watchlist-row"
       onClick={() => dispatch({ type: 'SELECT_SYMBOL', symbol })}
-      style={{ cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
+      style={{ cursor: 'pointer', borderBottom: '1px solid #21262d' }}
     >
-      <td style={{ padding: '2px 8px' }}>{symbol}</td>
-      <td style={{ padding: '2px 8px', textAlign: 'right' }}>{tick.price.toFixed(2)}</td>
-      <td style={{ padding: '2px 8px', textAlign: 'right', color: '#6c7086', fontSize: 10 }}>
+      <td style={{ padding: '6px 20px', color: '#58a6ff', fontWeight: 600, fontFamily: 'monospace', fontSize: 13, width: 100 }}>
+        {symbol}
+      </td>
+      <td style={{ padding: '6px 20px', textAlign: 'right', color: '#e6edf3', fontFamily: 'monospace', fontSize: 13 }}>
+        {tick.price.toFixed(2)}
+      </td>
+      <td style={{ padding: '6px 20px', textAlign: 'right', color: '#8b949e', fontFamily: 'monospace', fontSize: 11 }}>
         {new Date(tick.ts).toLocaleTimeString()}
       </td>
     </tr>
