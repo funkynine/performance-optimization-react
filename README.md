@@ -1,6 +1,6 @@
-# prep-for-work
+# React Optimization Traning
 
-Bloomberg/DataArt 4-week senior React prep micro-sandbox.
+4-week senior React prep micro-sandbox.
 
 ## Quick Start
 

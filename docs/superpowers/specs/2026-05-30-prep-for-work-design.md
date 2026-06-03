@@ -1,7 +1,7 @@
 # prep-for-work — Micro-Sandbox Design
 
 **Date:** 2026-05-30  
-**Goal:** A working baseline repo for Bloomberg/DataArt 4-week senior React prep. WS firehose, routing, dashboard, and state are pre-wired so the learner focuses on Web Workers, Lighthouse fixes, virtualization, and state manager bake-off — not setup.
+**Goal:** A working baseline repo for 4-week senior React prep. WS firehose, routing, dashboard, and state are pre-wired so the learner focuses on Web Workers, Lighthouse fixes, virtualization, and state manager bake-off — not setup.
 
 ---
 
