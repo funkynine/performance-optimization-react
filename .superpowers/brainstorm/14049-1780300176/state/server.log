@@ -3,3 +3,21 @@
 {"type":"screen-added","file":"/home/ihorbazyliuk/projects/prep-for-work/.superpowers/brainstorm/14049-1780300176/content/nav-layout.html"}
 {"source":"user-event","type":"click","text":"◈ prep\n          Dashboard\n          Watchlist\n          Settings\n          \n            ● LIVE\n            524/s\n          \n        \n        \n        \n          \n            \n              TICKS/S\n              524\n            \n            \n              SYMBOLS\n              200\n            \n            \n              TOP MOVER\n              NVDA ▲\n            \n          \n          \n            TOP 5 VOLATILE\n            \n              NVDA891.24▲ 2.1%\n            \n            \n              TSLA248.91▼ 1.8%\n            \n          \n        \n      \n    \n    \n      Top Bar\n      Горизонтальний навбар зверху. Максимум місця для контенту. Класичний dashboard layout.","choice":"top-bar","id":null,"timestamp":1780301152594}
 {"type":"screen-added","file":"/home/ihorbazyliuk/projects/prep-for-work/.superpowers/brainstorm/14049-1780300176/content/waiting.html"}
+{"type":"server-stopped","reason":"idle timeout"}
+node:fs:2414
+    return binding.writeFileUtf8(
+                   ^
+
+Error: ENOENT: no such file or directory, open '/home/ihorbazyliuk/projects/prep-for-work/.superpowers/brainstorm/14049-1780300176/state/server-stopped'
+[90m    at Object.writeFileSync (node:fs:2414:20)[39m
+    at shutdown [90m(/home/ihorbazyliuk/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/[39mserver.cjs:305:8[90m)[39m
+    at Timeout._onTimeout [90m(/home/ihorbazyliuk/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/[39mserver.cjs:322:59[90m)[39m
+[90m    at listOnTimeout (node:internal/timers:605:17)[39m
+[90m    at process.processTimers (node:internal/timers:541:7)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'open'[39m,
+  path: [32m'/home/ihorbazyliuk/projects/prep-for-work/.superpowers/brainstorm/14049-1780300176/state/server-stopped'[39m
+}
+
+Node.js v24.15.0

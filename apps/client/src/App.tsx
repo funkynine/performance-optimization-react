@@ -55,7 +55,7 @@ export function App() {
     <AppContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <nav style={navBase}>
-          <span style={{ color: '#58a6ff', fontWeight: 700, fontSize: 13, marginRight: 4 }}>◈ prep-for-work</span>
+          <span style={{ color: '#58a6ff', fontWeight: 700, fontSize: 13, marginRight: 4 }}>◈ Optimization React Traning</span>
           <span style={{ width: 1, height: 16, background: '#21262d', flexShrink: 0 }} />
           <NavLink to="/dashboard" style={({ isActive }) => isActive ? activeLink : linkBase}>Dashboard</NavLink>
           <NavLink to="/watchlist" style={({ isActive }) => isActive ? activeLink : linkBase}>Watchlist</NavLink>
