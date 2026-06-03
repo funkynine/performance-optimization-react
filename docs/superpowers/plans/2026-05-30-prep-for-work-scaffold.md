@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Scaffold a working Bloomberg-prep monorepo with a Node.js WS firehose server and a React 18 client (Vite + TypeScript) that has routing, Zustand tick store, rAF buffer, and dev tooling pre-wired — leaving intentional gaps for the learner to fill.
+**Goal:** Scaffold a working prep monorepo with a Node.js WS firehose server and a React 18 client (Vite + TypeScript) that has routing, Zustand tick store, rAF buffer, and dev tooling pre-wired — leaving intentional gaps for the learner to fill.
 
 **Architecture:** Turbo + pnpm monorepo with three packages: `packages/types` (shared TS types), `apps/server` (Node.js WS firehose on port 4000), `apps/client` (Vite + React + react-router-dom v6). The client connects via `useFirehose()` hook, buffers ticks in a `Map` ref, and flushes to Zustand once per `requestAnimationFrame`.
 
@@ -1303,7 +1303,7 @@ git commit -m "chore: integration smoke test passed — baseline scaffold comple
 ````markdown
 # prep-for-work
 
-Bloomberg/DataArt 4-week senior React prep micro-sandbox.
+4-week senior React prep micro-sandbox.
 
 ## Quick Start
 
