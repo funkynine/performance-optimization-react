@@ -1,67 +1,54 @@
 import { memo, useEffect, useRef } from 'react'
+import { createChart, IChartApi, ISeriesApi, LastPriceAnimationMode, LineData, LineSeries, LineType } from 'lightweight-charts'
 import { useTickStore } from '../store/useTickStore'
 
 type Props = { symbol: string }
 
+const CHART_OPTIONS = {
+  layout: { background: { color: '#161b22' }, textColor: '#8b949e' },
+  grid: { vertLines: { color: '#21262d' }, horzLines: { color: '#21262d' } },
+  crosshair: { vertLine: { labelBackgroundColor: '#21262d' }, horzLine: { labelBackgroundColor: '#21262d' } },
+  timeScale: { borderColor: '#21262d', timeVisible: true, secondsVisible: true },
+  rightPriceScale: { borderColor: '#21262d' },
+  height: 240,
+}
+
 export const PriceChart = memo(function PriceChart({ symbol }: Props) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const pricesRef = useRef<number[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
   const tick = useTickStore((s) => s.ticks[symbol])
+  const chartRef = useRef<IChartApi | null>(null)
+  const seriesRef = useRef<ISeriesApi<'Line'> | null>(null)
 
   useEffect(() => {
-    if (!tick) return
-    pricesRef.current.push(tick.price)
-    if (pricesRef.current.length > 200) pricesRef.current.shift()
+    if (!containerRef.current) return;
 
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    chartRef.current = createChart(containerRef.current!, CHART_OPTIONS);
+    seriesRef.current = chartRef.current.addSeries(LineSeries, {
+      color: '#58a6ff',
+      lineWidth: 1,
+      lastPriceAnimation: LastPriceAnimationMode.Continuous,
+      lineType: LineType.Simple
+    });
 
-    const { width, height } = canvas
-    ctx.clearRect(0, 0, width, height)
+    const observer = new ResizeObserver(() => chartRef.current?.applyOptions({ width: containerRef.current!.clientWidth }));
+    observer.observe(containerRef.current);
 
-    const prices = pricesRef.current
-    if (prices.length < 2) return
+    return () => {
+      observer.disconnect();
+      chartRef.current?.remove();
+      chartRef.current = null;
+    }
+  }, []);
 
-    const min = Math.min(...prices)
-    const max = Math.max(...prices)
-    const range = max - min || 1
+  useEffect(() => {
+    if (!tick) return;
 
-    ctx.strokeStyle = '#58a6ff'
-    ctx.lineWidth = 1.5
-    ctx.beginPath()
-    prices.forEach((p, i) => {
-      const x = (i / (prices.length - 1)) * width
-      const y = height - ((p - min) / range) * (height - 8) - 4
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
-    })
-    ctx.stroke()
-    // LEARNER TODO Week 4: replace with uPlot or lightweight-charts
-  }, [tick])
+    seriesRef.current?.update({ time: new Date().getTime() / 1000 as LineData['time'], value: tick?.price })
+  }, [tick]);
 
   return (
     <div style={{ padding: 20 }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 16 }}>
-        <span style={{ fontSize: 20, fontWeight: 700, color: '#e6edf3', fontFamily: 'monospace' }}>{symbol}</span>
-        <span style={{ fontSize: 24, fontWeight: 700, color: '#e6edf3', fontFamily: 'monospace' }}>
-          {tick?.price.toFixed(2) ?? '—'}
-        </span>
-      </div>
-      <canvas
-        ref={canvasRef}
-        width={800}
-        height={240}
-        style={{
-          display: 'block',
-          width: '100%',
-          maxWidth: 800,
-          height: 240,
-          background: '#161b22',
-          border: '1px solid #21262d',
-          borderRadius: 8,
-        }}
-      />
+        <div ref={containerRef} style={{ width: '100%', height: 240 }} />
     </div>
   )
 })
